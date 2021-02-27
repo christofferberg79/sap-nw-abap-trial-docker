@@ -1,14 +1,10 @@
-# SAP NW ABAP 7.52 SP01 Trial in Docker
+# SAP NW ABAP 7.52 SP04 Trial in Docker
 
 Useful for setting up a local ABAP for own education. Not intended for production. After all, we're putting a fat monolith into Docker. However, using Docker still allows you to keep your host system clean of all the mess any installation can cause.
 
 See my YouTube video for additional details: [Installing SAP NW ABAP 7.51 SP02 into Docker](https://www.youtube.com/watch?v=H0GEg8r7P48)
 
 Check also my blog [Installing SAP NW ABAP into Docker](https://blogs.sap.com/2018/05/30/installing-sap-nw-abap-into-docker/). There you'll find links to the whole blog series.
-
-**HINTS:**
-
-- Looking for NW ABAP 7.51 SP02? See [branch nw-abap-7.51](https://github.com/nzamani/sap-nw-abap-trial-docker/tree/nw-abap-7.51)
 
 For additional details about NW ABAP 7.52 SP04 see the [official SAP announcement by Julie Plummer](https://blogs.sap.com/2019/07/01/as-abap-752-sp04-developer-edition-to-download/).
 
@@ -36,14 +32,14 @@ The Dockerfile is based on:
     - Linux:
 
         ```sh
-        sysctl -w vm.max_map_count=1000000
+        sudo sysctl -w vm.max_map_count=1000000
         ```
 
     - macOS wit Docker for Mac (FYI see also here):
 
         ```sh
         screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty
-        sysctl -w vm.max_map_count=1000000
+        sudo sysctl -w vm.max_map_count=1000000
         ```
 
     - Windows and macOS with Docker Toolbox
@@ -66,15 +62,13 @@ The Dockerfile is based on:
 1. Clone this repo
 
     ```sh
-    git clone https://github.com/nzamani/sap-nw-abap-trial-docker.git
+    git clone https://github.com/christofferberg79/sap-nw-abap-trial-docker.git
     cd sap-nw-abap-trial-docker
     ```
 
-1. Download [SAP NW ABAP 7.52 SP01 Trial from SAP](https://developers.sap.com/germany/trials-downloads.html) (search for **7.52**), then:
-    - create a folder `sapdownloads` inside the clone
-        - `mkdir sapdownloads`
+1. Download [SAP NW ABAP 7.52 SP04 Trial from SAP](https://developers.sap.com/trials-downloads.html?search=7.52+SP04) to the folder `downloads` in the clone, then:
     - extract the downloaded rar files into the folder we just created (just extract the first rar file), i.e. assuming you have unrar installed (else use your tool of choice)
-        - `unrar x TD752SP01.part01.rar ./sapdownloads`
+        - `unrar x ./downloads/TD752SP04part01.rar ./sapdownloads`
 
     **Hint:** SAP wants to know who downloads the NW ABAP Trial version. Thus, you will have to logon with your own account before you can start the download. Creating an account is free, so is the download. The account can be the same account you use for the SAP Communitiy / SCN.
 
@@ -116,19 +110,15 @@ The Dockerfile is based on:
 
 1. Now start the installation of SAP NW ABAP 7.52 Trial
 
-    - Auto install via Expect script (suggested for simplicity)
+    ```sh
+    /usr/sbin/uuidd
+    ./install.sh
+    ```
 
-        ```sh
-        /usr/sbin/uuidd
-        ./install.exp
-        ```
-
-    - Or the standard way
-
-        ```sh
-        /usr/sbin/uuidd
-        ./install.sh
-        ```
+    Enter the following answers during installation
+    - Do you agree to the above license terms? yes/no: yes
+    - Please enter a password: Down1oad
+    - Please re-enter password for verification: Down1oad
 
     Your installation has been successful if you see the followong message: **Installation of NPL successful**
 
